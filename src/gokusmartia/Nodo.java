@@ -5,11 +5,13 @@ public class Nodo {
     int x;
     int y;  
     int level;
+    Nodo parent;
 
-    public Nodo(int x, int y, int level) {
+    public Nodo(int x, int y, int level, Nodo parent) {
         this.x = x;
         this.y = y;
         this.level = level;
+        this.parent = parent;
     }
 
     public int getX() {
@@ -35,4 +37,13 @@ public class Nodo {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    public Nodo getParent() {
+        return parent;
+    }
+
+    public void setParent(Nodo parent) {
+        this.parent = parent;
+    }
+    
 }
