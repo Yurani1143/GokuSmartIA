@@ -13,14 +13,13 @@ import java.util.TimerTask;
 public class AlgoritmosDeBusquedaNoInformada {
     
 
-    public static  List<Nodo>  busquedaPorAmplitud(int[][] matriz, int esferaX, int esferaY) {
+    public static List<Nodo> busquedaPorAmplitud(int[][] matriz, int esferaX, int esferaY) {
         int n = matriz.length;
         int m = matriz[0].length;
         boolean[][] visitado = new boolean[n][m];
-        
         Queue<Nodo> cola = new LinkedList<>();
         List<Nodo> nodosExpandidos = new ArrayList<>();
-
+        List<Nodo> path = new ArrayList<>();
         visitado[0][0] = true;
         cola.add(new Nodo(2, 8, 0, null));
         int nEsferas = 0;
@@ -62,8 +61,6 @@ public class AlgoritmosDeBusquedaNoInformada {
 
                 visitado[nodoActual.x][nodoActual.y] = true;
                 matriz[nodoActual.x][nodoActual.y] = 0;
-
-                List<Nodo> path = new ArrayList<>();
                 Nodo nodoCamino = nodoActual;
 
                 while (nodoCamino != null) {
@@ -81,20 +78,7 @@ public class AlgoritmosDeBusquedaNoInformada {
                 //cola.add(new Nodo(nodoActual.x, nodoActual.y, nodoActual.level));
                 if (nEsferas == 2) {
                     System.out.println("Goku ha encontrado las 2 esferas del Dragón");
-                    Timer t = new Timer();
-                    TimerTask tarea = new TimerTask() {
-                        int c = 0;
-                        @Override
-                        public void run() {
-                            c++;
-                            if(c != path.size()){
-                             pintarNuevaMatriz(matriz, path, c);   
-                            }else{
-                                t.cancel();
-                            }
-                        }
-                    };
-                    t.schedule(tarea, 0,1000);
+                    
                     return path;
                 }
             }
@@ -119,6 +103,7 @@ public class AlgoritmosDeBusquedaNoInformada {
         }
 
         System.out.println("Goku no encontró la Esfera del Dragón :(");
+        return path;
     }
 
     public static void pintarNuevaMatriz(int matriz[][], List<Nodo> path, int c) {
