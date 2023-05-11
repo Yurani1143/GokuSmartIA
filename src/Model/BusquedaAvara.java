@@ -21,7 +21,7 @@ public class BusquedaAvara {
         Nodo nodoInicial = new Nodo(2, 8, 0, null);
         cola.add(nodoInicial);
         nodosExpandidos.add(nodoInicial);
-        visitado[0][0] = true;
+        visitado[2][8] = true;
     
         while (!cola.isEmpty()) {
             Nodo nodoActual = cola.poll();
