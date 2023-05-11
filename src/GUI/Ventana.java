@@ -27,8 +27,14 @@ public class Ventana extends javax.swing.JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         matriz = gs.abrirArchivo();
         tb.dibujarTablero(matriz, PanelTablero);
-        AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+
+        long startTime = System.currentTimeMillis();
         BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
+        //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+        
         
     }
     
