@@ -5,6 +5,7 @@
 package GUI;
 
 import Model.AlgoritmosDeBusquedaNoInformada;
+import Model.BusquedaAvara;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -27,8 +28,8 @@ public class Ventana extends javax.swing.JFrame {
         matriz = gs.abrirArchivo();
         tb.dibujarTablero(matriz, PanelTablero);
         AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+        BusquedaAvara.busquedaAvara(matriz, 4, 0);
         
-
     }
     
 
