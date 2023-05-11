@@ -14,7 +14,8 @@ public class BusquedaAvara {
         int n = matriz.length;
         int m = matriz[0].length;
         boolean[][] visitado = new boolean[n][m];
-        PriorityQueue<Nodo> cola = new PriorityQueue<Nodo>(Comparator.comparingInt(nodo -> distanciaEuclidiana(nodo, esferaX, esferaY)));
+        PriorityQueue<Nodo> cola = new PriorityQueue<Nodo>
+        (Comparator.comparingInt(nodo -> distanciaEuclidiana(nodo, esferaX, esferaY)));
         List<Nodo> nodosExpandidos = new ArrayList<>();
         int nEsferas = 0;
         Nodo nodoInicial = new Nodo(2, 8, 0, null);
@@ -30,8 +31,8 @@ public class BusquedaAvara {
                 nEsferas++;
                 cola.clear();
                 cola.add(nodoActual);
-    
-                System.out.println("Goku encontró la Esfera del Dragón en la posición (" + esferaX + ", " + esferaY + ")");
+                
+                System.out.println("Goku encontró la Esfera del Dragón en la posición (" + nodoActual.x + ", " + nodoActual.y + ")");
     
                 System.out.println("Nodos expandidos: " + nodosExpandidos.size());
                 for (Nodo nodosExpandido : nodosExpandidos) {
