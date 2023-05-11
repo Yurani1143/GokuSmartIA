@@ -9,13 +9,13 @@ import java.util.Collections;
 
 public class BusquedaAvara {
 
-    public static void busquedaAvara(int[][] matriz, int esferaX, int esferaY) {
+    public static void busquedaAvara(int[][] matriz, int esferaX, int esferaY, int esferaX2,  int esferaY2) {
 
         int n = matriz.length;
         int m = matriz[0].length;
         boolean[][] visitado = new boolean[n][m];
         PriorityQueue<Nodo> cola = new PriorityQueue<Nodo>
-        (Comparator.comparingInt(nodo -> distanciaEuclidiana(nodo, esferaX, esferaY)));
+        (Comparator.comparingInt(nodo -> distanciaEuclidiana(nodo, esferaX, esferaY, esferaX2, esferaY2)));
         List<Nodo> nodosExpandidos = new ArrayList<>();
         int nEsferas = 0;
         Nodo nodoInicial = new Nodo(2, 8, 0, null);
@@ -126,11 +126,15 @@ public class BusquedaAvara {
 
 
     //Funcion que calcula la distancia euclidianan entre dos puntos.
-    public static int distanciaEuclidiana(Nodo nodo, int x, int y) {
-        return (int) Math.sqrt((nodo.x - x) * (nodo.x - x) + (nodo.y - y) * (nodo.y - y));
+    public static int distanciaEuclidiana(Nodo nodo, int esferaX, int esferaY, int esferaX2, int esferaY2) {
+      int d1 = (int) Math.sqrt((nodo.x - esferaX) * (nodo.x - esferaX) + (nodo.y - esferaY) * (nodo.y - esferaY));
+      int d2 = (int) Math.sqrt((nodo.x - esferaX2) * (nodo.x - esferaX2) + (nodo.y - esferaY2) * (nodo.y - esferaY2));
+      if(d1 <= d2){
+        return d1;
+      }else{
+     return d2;
+    }
     }
    
-
-
 }
 

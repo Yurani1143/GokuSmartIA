@@ -28,7 +28,7 @@ public class Ventana extends javax.swing.JFrame {
         matriz = gs.abrirArchivo();
         tb.dibujarTablero(matriz, PanelTablero);
         AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
-        BusquedaAvara.busquedaAvara(matriz, 4, 0);
+        BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
         
     }
     
