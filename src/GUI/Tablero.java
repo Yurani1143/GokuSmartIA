@@ -17,8 +17,8 @@ public class Tablero extends JFrame {
 
     public void dibujarTablero(int[][] matriz, JPanel panel, JLabel[][] tablero) {
 
-  //      panel.repaint();
-
+        panel.repaint();
+        
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 tablero[i][j].setOpaque(true);

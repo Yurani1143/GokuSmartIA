@@ -2,18 +2,20 @@ package Model;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.JOptionPane;
 
 public class AlgoritmosDeBusquedaNoInformada {
 
     public static List<Nodo> busquedaPorAmplitud(int[][] matriz) {
         int n = matriz.length;
         int m = matriz[0].length;
+        int[][] matrizInterna = new int[n][m];
         boolean[][] visitado = new boolean[n][m];
         Queue<Nodo> cola = new LinkedList<>();
         List<Nodo> nodosExpandidos = new ArrayList<>();
@@ -22,17 +24,22 @@ public class AlgoritmosDeBusquedaNoInformada {
         cola.add(new Nodo(2, 8, 0, null));
         int nEsferas = 0;
 
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+             matrizInterna[i][j] =  matriz[i][j];   
+            }
+        }
         while (!cola.isEmpty()) {
             Nodo nodoActual = cola.poll();
             nodosExpandidos.add(nodoActual);
 
-            if (matriz[nodoActual.x][nodoActual.y] == 6) {
+            if (matrizInterna[nodoActual.x][nodoActual.y] == 6) {
                 nEsferas++;
                 cola.clear();
-                cola.add(new Nodo(nodoActual.x, nodoActual.y, nodoActual.level, nodoActual));
+                cola.add(nodoActual);
                 System.out.println("\n¡Goku encontró la Esfera del Dragón! en la casilla: (" + nodoActual.x + ", " + nodoActual.y + ")");
+                //JOptionPane.showMessageDialog(null, "\n¡Goku encontró la Esfera del Dragón! en la casilla: (" + nodoActual.x + ", " + nodoActual.y + ")");
                 System.out.println("Nodos expandidos: " + nodosExpandidos.size());
-
                 for (Nodo nodoExpandido : nodosExpandidos) {
                     System.out.print("[" + nodoExpandido.x + "," + nodoExpandido.y + "]");
                 }
@@ -58,7 +65,7 @@ public class AlgoritmosDeBusquedaNoInformada {
                 }
 
                 visitado[nodoActual.x][nodoActual.y] = true;
-                matriz[nodoActual.x][nodoActual.y] = 0;
+                matrizInterna[nodoActual.x][nodoActual.y] = 0;
                 Nodo nodoCamino = nodoActual;
 
                 while (nodoCamino != null) {
@@ -83,19 +90,19 @@ public class AlgoritmosDeBusquedaNoInformada {
             }
 
             // Expandir vecinos
-            if (nodoActual.x > 0 && !visitado[nodoActual.x - 1][nodoActual.y] && matriz[nodoActual.x - 1][nodoActual.y] != 1) {
+            if (nodoActual.x > 0 && !visitado[nodoActual.x - 1][nodoActual.y] && matrizInterna[nodoActual.x - 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x - 1][nodoActual.y] = true;
                 cola.add(new Nodo(nodoActual.x - 1, nodoActual.y, nodoActual.level + 1, nodoActual));
             }
-            if (nodoActual.x < n - 1 && !visitado[nodoActual.x + 1][nodoActual.y] && matriz[nodoActual.x + 1][nodoActual.y] != 1) {
+            if (nodoActual.x < n - 1 && !visitado[nodoActual.x + 1][nodoActual.y] && matrizInterna[nodoActual.x + 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x + 1][nodoActual.y] = true;
                 cola.add(new Nodo(nodoActual.x + 1, nodoActual.y, nodoActual.level + 1, nodoActual));
             }
-            if (nodoActual.y > 0 && !visitado[nodoActual.x][nodoActual.y - 1] && matriz[nodoActual.x][nodoActual.y - 1] != 1) {
+            if (nodoActual.y > 0 && !visitado[nodoActual.x][nodoActual.y - 1] && matrizInterna[nodoActual.x][nodoActual.y - 1] != 1) {
                 visitado[nodoActual.x][nodoActual.y - 1] = true;
                 cola.add(new Nodo(nodoActual.x, nodoActual.y - 1, nodoActual.level + 1, nodoActual));
             }
-            if (nodoActual.y < m - 1 && !visitado[nodoActual.x][nodoActual.y + 1] && matriz[nodoActual.x][nodoActual.y + 1] != 1) {
+            if (nodoActual.y < m - 1 && !visitado[nodoActual.x][nodoActual.y + 1] && matrizInterna[nodoActual.x][nodoActual.y + 1] != 1) {
                 visitado[nodoActual.x][nodoActual.y + 1] = true;
                 cola.add(new Nodo(nodoActual.x, nodoActual.y + 1, nodoActual.level + 1, nodoActual));
             }
@@ -123,6 +130,7 @@ public class AlgoritmosDeBusquedaNoInformada {
 
         int n = matriz.length;
         int m = matriz[0].length;
+        int[][] matrizInterna = new int[n][m];
         boolean[][] visitado = new boolean[n][m];
         Stack<Nodo> pila = new Stack<>();
         List<Nodo> nodosExpandidos = new ArrayList<>();
@@ -133,10 +141,16 @@ public class AlgoritmosDeBusquedaNoInformada {
         nodosExpandidos.add(nodoInicial);
         visitado[0][0] = true;
 
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+             matrizInterna[i][j] =  matriz[i][j];   
+            }
+        }
+        
         while (!pila.empty()) {
             Nodo nodoActual = pila.pop();
 
-            if (matriz[nodoActual.x][nodoActual.y] == 6) {
+            if (matrizInterna[nodoActual.x][nodoActual.y] == 6) {
 
                 nEsferas++;
                 pila.clear();
@@ -169,7 +183,7 @@ public class AlgoritmosDeBusquedaNoInformada {
                 }
 
                 visitado[nodoActual.x][nodoActual.y] = true;
-                matriz[nodoActual.x][nodoActual.y] = 0;
+                matrizInterna[nodoActual.x][nodoActual.y] = 6;
                 Nodo nodoCamino = nodoActual;
 
                 while (nodoCamino != null) {
@@ -193,25 +207,25 @@ public class AlgoritmosDeBusquedaNoInformada {
                 path.clear();
             }
             // Agrega los nodos hijos a la pila
-            if (nodoActual.x > 0 && !visitado[nodoActual.x - 1][nodoActual.y] && matriz[nodoActual.x - 1][nodoActual.y] != 1) {
+            if (nodoActual.x > 0 && !visitado[nodoActual.x - 1][nodoActual.y] && matrizInterna[nodoActual.x - 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x - 1][nodoActual.y] = true;
                 Nodo hijo = new Nodo(nodoActual.x - 1, nodoActual.y, nodoActual.level + 1, nodoActual);
                 pila.push(hijo);
                 nodosExpandidos.add(hijo);
             }
-            if (nodoActual.x < n - 1 && !visitado[nodoActual.x + 1][nodoActual.y] && matriz[nodoActual.x + 1][nodoActual.y] != 1) {
+            if (nodoActual.x < n - 1 && !visitado[nodoActual.x + 1][nodoActual.y] && matrizInterna[nodoActual.x + 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x + 1][nodoActual.y] = true;
                 Nodo hijo = new Nodo(nodoActual.x + 1, nodoActual.y, nodoActual.level + 1, nodoActual);
                 pila.push(hijo);
                 nodosExpandidos.add(hijo);
             }
-            if (nodoActual.y > 0 && !visitado[nodoActual.x][nodoActual.y - 1] && matriz[nodoActual.x][nodoActual.y - 1] != 1) {
+            if (nodoActual.y > 0 && !visitado[nodoActual.x][nodoActual.y - 1] && matrizInterna[nodoActual.x][nodoActual.y - 1] != 1) {
                 visitado[nodoActual.x][nodoActual.y - 1] = true;
                 Nodo hijo = new Nodo(nodoActual.x, nodoActual.y - 1, nodoActual.level + 1, nodoActual);
                 pila.push(hijo);
                 nodosExpandidos.add(hijo);
             }
-            if (nodoActual.y < m - 1 && !visitado[nodoActual.x][nodoActual.y + 1] && matriz[nodoActual.x][nodoActual.y + 1] != 1) {
+            if (nodoActual.y < m - 1 && !visitado[nodoActual.x][nodoActual.y + 1] && matrizInterna[nodoActual.x][nodoActual.y + 1] != 1) {
                 visitado[nodoActual.x][nodoActual.y + 1] = true;
                 Nodo hijo = new Nodo(nodoActual.x, nodoActual.y + 1, nodoActual.level + 1, nodoActual);
                 pila.push(hijo);

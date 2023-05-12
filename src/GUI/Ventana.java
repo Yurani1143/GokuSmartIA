@@ -7,6 +7,7 @@ package GUI;
 import Model.AlgoritmosDeBusquedaNoInformada;
 import Model.BusquedaAvara;
 import Model.Nodo;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -49,15 +50,6 @@ public class Ventana extends javax.swing.JFrame {
         tb.dibujarTablero(matriz, PanelTablero, tablero);
         //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
         //BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
-
-
-        long startTime = System.currentTimeMillis();
-        BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
-        //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
-        long endTime = System.currentTimeMillis();
-        long totalTime = endTime - startTime;
-        System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -67,12 +59,22 @@ public class Ventana extends javax.swing.JFrame {
         cbxTipoBusqueda = new javax.swing.JComboBox<>();
         tipoBusqueda = new javax.swing.JComboBox<>();
         PanelTablero = new javax.swing.JPanel();
+        panelInfo = new javax.swing.JPanel();
+        etiPath = new javax.swing.JLabel();
+        etiCostoEditable = new javax.swing.JLabel();
+        etiNodoExpandidos = new javax.swing.JLabel();
+        etiCosto = new javax.swing.JLabel();
+        etiProfundidadArb = new javax.swing.JLabel();
+        etiProfundidadArbEditable = new javax.swing.JLabel();
+        etiTiempoEjecucionEditable = new javax.swing.JLabel();
+        etiTiempoEjecucion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        etiPathEditable = new javax.swing.JLabel();
+        etiPathEditable1 = new javax.swing.JLabel();
         btnIniciar = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        panelFondo = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -80,6 +82,8 @@ public class Ventana extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 255));
         setForeground(new java.awt.Color(102, 102, 255));
+        setMinimumSize(new java.awt.Dimension(1000, 581));
+        setSize(new java.awt.Dimension(1150, 581));
 
         cbxTipoBusqueda.setBackground(new java.awt.Color(102, 255, 102));
         cbxTipoBusqueda.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -119,6 +123,114 @@ public class Ventana extends javax.swing.JFrame {
             .addGap(0, 496, Short.MAX_VALUE)
         );
 
+        panelInfo.setBackground(new java.awt.Color(102, 102, 205));
+        panelInfo.setToolTipText("");
+        panelInfo.setAutoscrolls(true);
+        panelInfo.setMaximumSize(new java.awt.Dimension(306, 392));
+        panelInfo.setMinimumSize(new java.awt.Dimension(306, 392));
+
+        etiPath.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiPath.setForeground(new java.awt.Color(255, 255, 255));
+        etiPath.setText("Ruta");
+
+        etiCostoEditable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        etiCostoEditable.setForeground(new java.awt.Color(255, 255, 255));
+        etiCostoEditable.setText("....");
+
+        etiNodoExpandidos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiNodoExpandidos.setForeground(new java.awt.Color(255, 255, 255));
+        etiNodoExpandidos.setText("Nodos expandidos");
+
+        etiCosto.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiCosto.setForeground(new java.awt.Color(255, 255, 255));
+        etiCosto.setText("Costo de solución");
+
+        etiProfundidadArb.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiProfundidadArb.setForeground(new java.awt.Color(255, 255, 255));
+        etiProfundidadArb.setText("Profundidad de árbol");
+
+        etiProfundidadArbEditable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        etiProfundidadArbEditable.setForeground(new java.awt.Color(255, 255, 255));
+        etiProfundidadArbEditable.setText("....");
+
+        etiTiempoEjecucionEditable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        etiTiempoEjecucionEditable.setForeground(new java.awt.Color(255, 255, 255));
+        etiTiempoEjecucionEditable.setText("....");
+
+        etiTiempoEjecucion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        etiTiempoEjecucion.setForeground(new java.awt.Color(255, 255, 255));
+        etiTiempoEjecucion.setText("Tiempo de ejecución");
+
+        jScrollPane1.setBackground(new java.awt.Color(102, 102, 205));
+        jScrollPane1.setForeground(new java.awt.Color(102, 102, 205));
+        jScrollPane1.setAutoscrolls(true);
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(16, 16));
+        jScrollPane1.setOpaque(false);
+
+        etiPathEditable.setBackground(new java.awt.Color(102, 102, 205));
+        etiPathEditable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        etiPathEditable.setForeground(new java.awt.Color(255, 255, 255));
+        etiPathEditable.setText("....");
+        etiPathEditable.setAutoscrolls(true);
+        etiPathEditable.setOpaque(true);
+        jScrollPane1.setViewportView(etiPathEditable);
+
+        etiPathEditable1.setBackground(new java.awt.Color(102, 102, 205));
+        etiPathEditable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        etiPathEditable1.setForeground(new java.awt.Color(255, 255, 255));
+        etiPathEditable1.setText("....");
+        etiPathEditable1.setAutoscrolls(true);
+        etiPathEditable1.setOpaque(true);
+
+        javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
+        panelInfo.setLayout(panelInfoLayout);
+        panelInfoLayout.setHorizontalGroup(
+            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(etiNodoExpandidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiCostoEditable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiCosto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiProfundidadArbEditable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiProfundidadArb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiTiempoEjecucionEditable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(etiTiempoEjecucion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panelInfoLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(etiPathEditable1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        panelInfoLayout.setVerticalGroup(
+            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelInfoLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(etiPath, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiNodoExpandidos, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiPathEditable1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(etiProfundidadArb, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiProfundidadArbEditable, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(etiCosto, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiCostoEditable, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(etiTiempoEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(etiTiempoEjecucionEditable, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
+
         btnIniciar.setBackground(new java.awt.Color(102, 102, 255));
         btnIniciar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,11 +242,6 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tipo de búsqueda");
@@ -143,26 +250,32 @@ public class Ventana extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Tipo de algoritmo");
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(1321, 720));
+        panelFondo.setMinimumSize(new java.awt.Dimension(1150, 581));
+        panelFondo.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo-namek.jpg"))); // NOI18N
         jLabel4.setText("jLabel4");
-        jLabel4.setMaximumSize(new java.awt.Dimension(1321, 720));
-        jLabel4.setMinimumSize(new java.awt.Dimension(1321, 720));
+        jLabel4.setMaximumSize(new java.awt.Dimension(1321, 581));
+        jLabel4.setMinimumSize(new java.awt.Dimension(1321, 581));
+        jLabel4.setPreferredSize(new Dimension(panelFondo.getWidth(), panelFondo.getHeight()));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 992, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 991, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelFondoLayout = new javax.swing.GroupLayout(panelFondo);
+        panelFondo.setLayout(panelFondoLayout);
+        panelFondoLayout.setHorizontalGroup(
+            panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1179, Short.MAX_VALUE)
+            .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelFondoLayout.createSequentialGroup()
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 559, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 559, Short.MAX_VALUE))
+        panelFondoLayout.setVerticalGroup(
+            panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelFondoLayout.createSequentialGroup()
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,13 +294,12 @@ public class Ventana extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(btnIniciar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
                 .addComponent(PanelTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGap(33, 33, 33)
+                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE))
+                .addComponent(panelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,12 +317,12 @@ public class Ventana extends javax.swing.JFrame {
                         .addComponent(tipoBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(PanelTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                    .addComponent(PanelTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -237,18 +349,77 @@ public class Ventana extends javax.swing.JFrame {
         t.schedule(tarea, 0, 500);
     }
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+
         btnIniciar.setEnabled(false);
         List<Nodo> path = new ArrayList<>();
         matriz = gs.abrirArchivo();
         tb.dibujarTablero(matriz, PanelTablero, tablero);
+        String strPath = "";
         if (optb == 1 && opab == 0) {
+            long startTime = System.currentTimeMillis();
             path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz);
+            //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+            long endTime = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+            etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
+            System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+            for (int i = 0; i < path.size(); i++) {
+                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
+            }
+            etiPathEditable.setText(strPath);
             movimientoGokuTiempo(path);
         } else if (optb == 1 && opab == 1) {
+            long startTime = System.currentTimeMillis();
             path = BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
+            long endTime = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+            etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
+            System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+            for (int i = 0; i < path.size(); i++) {
+                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
+            }
+            etiPathEditable.setText(strPath);
             movimientoGokuTiempo(path);
         } else if (optb == 1 && opab == 2) {
+            long startTime = System.currentTimeMillis();
             path = AlgoritmosDeBusquedaNoInformada.busquedaPorProfundidad(matriz);
+            long endTime = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+            etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
+            System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+            for (int i = 0; i < path.size(); i++) {
+                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
+            }
+            etiPathEditable.setText(strPath);
+            movimientoGokuTiempo(path);
+        }
+        
+        if (optb == 2 && opab == 0) {
+            long startTime = System.currentTimeMillis();
+            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz);
+            //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+            long endTime = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+            etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
+            System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+            for (int i = 0; i < path.size(); i++) {
+                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
+            }
+            etiPathEditable.setText(strPath);
+            movimientoGokuTiempo(path);
+        }
+        if (optb == 2 && opab == 1) {
+            long startTime = System.currentTimeMillis();
+            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz);
+            //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+            long endTime = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+            etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
+            System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+            for (int i = 0; i < path.size(); i++) {
+                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
+            }
+            etiPathEditable.setText(strPath);
             movimientoGokuTiempo(path);
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
@@ -259,7 +430,7 @@ public class Ventana extends javax.swing.JFrame {
 
     private void cbxTipoBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoBusquedaActionPerformed
         optb = cbxTipoBusqueda.getSelectedIndex();
-        
+
         switch (optb) {
             case 1:
                 tipoBusqueda.setEnabled(true);
@@ -302,13 +473,23 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JPanel PanelTablero;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
+    private javax.swing.JLabel etiCosto;
+    private javax.swing.JLabel etiCostoEditable;
+    private javax.swing.JLabel etiNodoExpandidos;
+    private javax.swing.JLabel etiPath;
+    private javax.swing.JLabel etiPathEditable;
+    private javax.swing.JLabel etiPathEditable1;
+    private javax.swing.JLabel etiProfundidadArb;
+    private javax.swing.JLabel etiProfundidadArbEditable;
+    private javax.swing.JLabel etiTiempoEjecucion;
+    private javax.swing.JLabel etiTiempoEjecucionEditable;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelFondo;
+    private javax.swing.JPanel panelInfo;
     private javax.swing.JComboBox<String> tipoBusqueda;
     // End of variables declaration//GEN-END:variables
 }

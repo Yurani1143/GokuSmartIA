@@ -31,7 +31,7 @@ public class GestionArchivo {
                i++; // siguiente fila.
            }
            lector.close();
-     
+           
        }
        catch(IOException e){
            System.err.println(e);
