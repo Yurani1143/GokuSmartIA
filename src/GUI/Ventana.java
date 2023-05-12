@@ -49,6 +49,15 @@ public class Ventana extends javax.swing.JFrame {
         tb.dibujarTablero(matriz, PanelTablero, tablero);
         //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
         //BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
+
+
+        long startTime = System.currentTimeMillis();
+        BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
+        //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+        long endTime = System.currentTimeMillis();
+        long totalTime = endTime - startTime;
+        System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
