@@ -9,11 +9,9 @@ import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 public class AlgoritmosDeBusquedaNoInformada {
-    
 
-    public static List<Nodo> busquedaPorAmplitud(int[][] matriz, int esferaX, int esferaY) {
+    public static List<Nodo> busquedaPorAmplitud(int[][] matriz) {
         int n = matriz.length;
         int m = matriz[0].length;
         boolean[][] visitado = new boolean[n][m];
@@ -78,9 +76,10 @@ public class AlgoritmosDeBusquedaNoInformada {
                 //cola.add(new Nodo(nodoActual.x, nodoActual.y, nodoActual.level));
                 if (nEsferas == 2) {
                     System.out.println("Goku ha encontrado las 2 esferas del Dragón");
-                    
+
                     return path;
                 }
+                path.clear();
             }
 
             // Expandir vecinos
@@ -102,31 +101,32 @@ public class AlgoritmosDeBusquedaNoInformada {
             }
         }
 
-        System.out.println("Goku no encontró la Esfera del Dragón :(");
+        System.out.println("Goku no pudo encontró Esferas del Dragón");
         return path;
     }
 
     public static void pintarNuevaMatriz(int matriz[][], List<Nodo> path, int c) {
         int n = matriz.length, m = matriz[0].length;
         int matrizNueva[][] = new int[n][m];
-            matrizNueva[path.get(c).x][path.get(c).y] = 9;
+        matrizNueva[path.get(c).x][path.get(c).y] = 9;
 
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
-                    System.out.print(matrizNueva[i][j] + " ");
-                }
-                System.out.println("");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                System.out.print(matrizNueva[i][j] + " ");
             }
             System.out.println("");
+        }
+        System.out.println("");
     }
 
-    public static void busquedaPorProfundidad(int[][] matriz, int esferaX, int esferaY) {
+    public static List<Nodo> busquedaPorProfundidad(int[][] matriz) {
 
         int n = matriz.length;
         int m = matriz[0].length;
         boolean[][] visitado = new boolean[n][m];
         Stack<Nodo> pila = new Stack<>();
         List<Nodo> nodosExpandidos = new ArrayList<>();
+        List<Nodo> path = new ArrayList<>();
         int nEsferas = 0;
         Nodo nodoInicial = new Nodo(2, 8, 0, null);
         pila.push(nodoInicial);
@@ -142,7 +142,7 @@ public class AlgoritmosDeBusquedaNoInformada {
                 pila.clear();
                 pila.push(nodoActual);
 
-                System.out.println("Goku encontró la Esfera del Dragón en la posición (" + esferaX + ", " + esferaY + ")");
+                System.out.println("Goku encontró la Esfera del Dragón en la posición (" + nodoActual.x + ", " + nodoActual.y + ")");
 
                 System.out.println("Nodos expandidos: " + nodosExpandidos.size());
                 for (Nodo nodosExpandido : nodosExpandidos) {
@@ -170,14 +170,13 @@ public class AlgoritmosDeBusquedaNoInformada {
 
                 visitado[nodoActual.x][nodoActual.y] = true;
                 matriz[nodoActual.x][nodoActual.y] = 0;
-
-                List<Nodo> path = new ArrayList<>();
                 Nodo nodoCamino = nodoActual;
 
                 while (nodoCamino != null) {
                     path.add(nodoCamino);
                     nodoCamino = nodoCamino.parent;
                 }
+
                 Collections.reverse(path);
                 System.out.print("Camino: ");
 
@@ -185,21 +184,14 @@ public class AlgoritmosDeBusquedaNoInformada {
                     System.out.print("[" + path.get(i).x + "," + path.get(i).y + "]");
                 }
                 System.out.println("");
-                path.clear();
-
+                //cola.add(new Nodo(nodoActual.x, nodoActual.y, nodoActual.level));
                 if (nEsferas == 2) {
-                    return;
+                    System.out.println("Goku ha encontrado las 2 esferas del Dragón");
+
+                    return path;
                 }
+                path.clear();
             }
-            /*
-            0 libre
-            1 muro
-            2 donde inicia goku
-            3 freezer
-            4 cell
-            5 semilla
-            6 esfera
-             */
             // Agrega los nodos hijos a la pila
             if (nodoActual.x > 0 && !visitado[nodoActual.x - 1][nodoActual.y] && matriz[nodoActual.x - 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x - 1][nodoActual.y] = true;
@@ -227,9 +219,10 @@ public class AlgoritmosDeBusquedaNoInformada {
             }
         }
 
-        System.out.println("Goku no pudo encontrar la Esfera del Dragón en la posición (" + esferaX + ", " + esferaY + ")");
+        System.out.println("Goku no pudo encontró Esferas del Dragón");
         System.out.println("Número de nodos expandidos: " + nodosExpandidos.size());
         System.out.println("Profundidad del árbol: " + nodosExpandidos.get(nodosExpandidos.size() - 1).level);
+        return path;
     }
 
 }
