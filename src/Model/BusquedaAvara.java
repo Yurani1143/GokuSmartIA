@@ -8,27 +8,27 @@ import java.util.Collections;
 
 public class BusquedaAvara {
 
-    public static List<Nodo> busquedaAvara(int[][] matriz, int esferaX, int esferaY, int esferaX2, int esferaY2) {
-
+    public static List<Nodo> busquedaAvara(int[][] matriz, Nodo goku, Nodo esfera1, Nodo esfera2) {
+        System.out.println("AVARAAAA");
         int n = matriz.length;
         int m = matriz[0].length;
         int[][] matrizInterna = new int[n][m];
         boolean[][] visitado = new boolean[n][m];
-        PriorityQueue<Nodo> cola = new PriorityQueue<Nodo>(Comparator.comparingInt(nodo -> distanciaEuclidiana(nodo, esferaX, esferaY, esferaX2, esferaY2)));
+        PriorityQueue<Nodo> cola = new PriorityQueue<Nodo>(Comparator.comparingInt(nodo -> distanciaEuclidiana(nodo, esfera1.x, esfera1.y, esfera2.x, esfera2.y)));
         List<Nodo> nodosExpandidos = new ArrayList<>();
         List<Nodo> path = new ArrayList<>();
         int nEsferas = 0;
-        Nodo nodoInicial = new Nodo(2, 8, 0, null);
+        Nodo nodoInicial = new Nodo(goku.x, goku.y, 0, null, nodosExpandidos);
         cola.add(nodoInicial);
         nodosExpandidos.add(nodoInicial);
-        visitado[2][8] = true;
-        
+        visitado[goku.x][goku.y] = true;
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-             matrizInterna[i][j] =  matriz[i][j];   
+                matrizInterna[i][j] = matriz[i][j];
             }
         }
-        
+
         while (!cola.isEmpty()) {
             Nodo nodoActual = cola.poll();
 
@@ -79,35 +79,34 @@ public class BusquedaAvara {
                     System.out.print("[" + path.get(i).x + "," + path.get(i).y + "]");
                 }
                 System.out.println("");
-                path.clear();
 
                 if (nEsferas == 2) {
                     return path;
                 }
                 path.clear();
             }
-            
+
             if (nodoActual.x > 0 && !visitado[nodoActual.x - 1][nodoActual.y] && matrizInterna[nodoActual.x - 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x - 1][nodoActual.y] = true;
-                Nodo hijo = new Nodo(nodoActual.x - 1, nodoActual.y, nodoActual.level + 1, nodoActual);
+                Nodo hijo = new Nodo(nodoActual.x - 1, nodoActual.y, nodoActual.level + 1, nodoActual, nodosExpandidos);
                 cola.add(hijo);
                 nodosExpandidos.add(hijo);
             }
             if (nodoActual.x < n - 1 && !visitado[nodoActual.x + 1][nodoActual.y] && matrizInterna[nodoActual.x + 1][nodoActual.y] != 1) {
                 visitado[nodoActual.x + 1][nodoActual.y] = true;
-                Nodo hijo = new Nodo(nodoActual.x + 1, nodoActual.y, nodoActual.level + 1, nodoActual);
+                Nodo hijo = new Nodo(nodoActual.x + 1, nodoActual.y, nodoActual.level + 1, nodoActual, nodosExpandidos);
                 cola.add(hijo);
                 nodosExpandidos.add(hijo);
             }
             if (nodoActual.y > 0 && !visitado[nodoActual.x][nodoActual.y - 1] && matrizInterna[nodoActual.x][nodoActual.y - 1] != 1) {
                 visitado[nodoActual.x][nodoActual.y - 1] = true;
-                Nodo hijo = new Nodo(nodoActual.x, nodoActual.y - 1, nodoActual.level + 1, nodoActual);
+                Nodo hijo = new Nodo(nodoActual.x, nodoActual.y - 1, nodoActual.level + 1, nodoActual, nodosExpandidos);
                 cola.add(hijo);
                 nodosExpandidos.add(hijo);
             }
             if (nodoActual.y < m - 1 && !visitado[nodoActual.x][nodoActual.y + 1] && matrizInterna[nodoActual.x][nodoActual.y + 1] != 1) {
                 visitado[nodoActual.x][nodoActual.y + 1] = true;
-                Nodo hijo = new Nodo(nodoActual.x, nodoActual.y + 1, nodoActual.level + 1, nodoActual);
+                Nodo hijo = new Nodo(nodoActual.x, nodoActual.y + 1, nodoActual.level + 1, nodoActual, nodosExpandidos);
                 cola.add(hijo);
                 nodosExpandidos.add(hijo);
             }

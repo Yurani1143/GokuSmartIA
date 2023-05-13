@@ -5,25 +5,20 @@
 package GUI;
 
 import Model.AlgoritmosDeBusquedaNoInformada;
+import Model.Archivo;
 import Model.BusquedaAvara;
 import Model.Nodo;
 import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.util.Timer;
 
 public class Ventana extends javax.swing.JFrame {
 
-    GestionArchivo gs = new GestionArchivo();
     public Tablero tb = new Tablero();
-    int[][] matriz;
+    Archivo infoArchivo;
     JLabel[][] tablero;
     int optb, opab;
 
@@ -46,8 +41,8 @@ public class Ventana extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        matriz = gs.abrirArchivo();
-        tb.dibujarTablero(matriz, PanelTablero, tablero);
+        infoArchivo = Archivo.abrirArchivo();
+        tb.dibujarTablero(infoArchivo.getMatriz(), PanelTablero, tablero);
         //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
         //BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
     }
@@ -70,7 +65,8 @@ public class Ventana extends javax.swing.JFrame {
         etiTiempoEjecucion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         etiPathEditable = new javax.swing.JLabel();
-        etiPathEditable1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        etiNodosExpandidosEditable = new javax.swing.JLabel();
         btnIniciar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -175,12 +171,19 @@ public class Ventana extends javax.swing.JFrame {
         etiPathEditable.setOpaque(true);
         jScrollPane1.setViewportView(etiPathEditable);
 
-        etiPathEditable1.setBackground(new java.awt.Color(102, 102, 205));
-        etiPathEditable1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        etiPathEditable1.setForeground(new java.awt.Color(255, 255, 255));
-        etiPathEditable1.setText("....");
-        etiPathEditable1.setAutoscrolls(true);
-        etiPathEditable1.setOpaque(true);
+        jScrollPane2.setBackground(new java.awt.Color(102, 102, 205));
+        jScrollPane2.setForeground(new java.awt.Color(102, 102, 205));
+        jScrollPane2.setAutoscrolls(true);
+        jScrollPane2.setMaximumSize(new java.awt.Dimension(16, 16));
+        jScrollPane2.setOpaque(false);
+
+        etiNodosExpandidosEditable.setBackground(new java.awt.Color(102, 102, 205));
+        etiNodosExpandidosEditable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        etiNodosExpandidosEditable.setForeground(new java.awt.Color(255, 255, 255));
+        etiNodosExpandidosEditable.setText("....");
+        etiNodosExpandidosEditable.setAutoscrolls(true);
+        etiNodosExpandidosEditable.setOpaque(true);
+        jScrollPane2.setViewportView(etiNodosExpandidosEditable);
 
         javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
         panelInfo.setLayout(panelInfoLayout);
@@ -198,11 +201,10 @@ public class Ventana extends javax.swing.JFrame {
                     .addComponent(etiTiempoEjecucionEditable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(etiTiempoEjecucion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelInfoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelInfoLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(etiPathEditable1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelInfoLayout.setVerticalGroup(
@@ -215,8 +217,8 @@ public class Ventana extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(etiNodoExpandidos, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(etiPathEditable1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(etiProfundidadArb, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(etiProfundidadArbEditable, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,7 +339,7 @@ public class Ventana extends javax.swing.JFrame {
             @Override
             public void run() {
                 if (c != path.size()) {
-                    tb.movimientoGoku(matriz, path, c, PanelTablero, tablero);
+                    tb.movimientoGoku(infoArchivo.getMatriz(), path, c, PanelTablero, tablero);
                 } else {
                     btnIniciar.setEnabled(true);
                     t.cancel();
@@ -348,78 +350,78 @@ public class Ventana extends javax.swing.JFrame {
 
         t.schedule(tarea, 0, 500);
     }
+
+    public void pintarInfoAlgoritmo(List<Nodo> path) {
+        String strPath = "", strNodosExpandidos = "";
+        for (int i = 0; i < path.size(); i++) {
+            strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
+        }
+        for (int i = 0; i < path.get(path.size() - 1).nodosExpandidos.size(); i++) {
+            strNodosExpandidos += "[" + path.get(path.size() - 1).nodosExpandidos.get(i).x + "," + path.get(path.size() - 1).nodosExpandidos.get(i).y + "] ";
+        }
+        etiNodosExpandidosEditable.setText(path.get(path.size() - 1).nodosExpandidos.size() + " - " + strNodosExpandidos);
+        etiProfundidadArbEditable.setText(String.valueOf(path.get(path.size() - 1).level));
+        etiPathEditable.setText(path.size() + " - " + strPath);
+    }
+
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
 
         btnIniciar.setEnabled(false);
         List<Nodo> path = new ArrayList<>();
-        matriz = gs.abrirArchivo();
-        tb.dibujarTablero(matriz, PanelTablero, tablero);
-        String strPath = "";
+        infoArchivo = Archivo.abrirArchivo();
+        tb.dibujarTablero(infoArchivo.getMatriz(), PanelTablero, tablero);
+
         if (optb == 1 && opab == 0) {
             long startTime = System.currentTimeMillis();
-            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz);
+            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(infoArchivo.getMatriz(),infoArchivo.getGoku());
             //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            for (int i = 0; i < path.size(); i++) {
-                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
-            }
-            etiPathEditable.setText(strPath);
+            pintarInfoAlgoritmo(path);
             movimientoGokuTiempo(path);
         } else if (optb == 1 && opab == 1) {
             long startTime = System.currentTimeMillis();
-            path = BusquedaAvara.busquedaAvara(matriz, 4, 0, 9, 3);
+            path = BusquedaAvara.busquedaAvara(infoArchivo.getMatriz(), infoArchivo.getGoku(), infoArchivo.getEsfera1(), infoArchivo.getEsfera2());
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            for (int i = 0; i < path.size(); i++) {
-                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
-            }
-            etiPathEditable.setText(strPath);
+            pintarInfoAlgoritmo(path);
             movimientoGokuTiempo(path);
         } else if (optb == 1 && opab == 2) {
             long startTime = System.currentTimeMillis();
-            path = AlgoritmosDeBusquedaNoInformada.busquedaPorProfundidad(matriz);
+            path = AlgoritmosDeBusquedaNoInformada.busquedaPorProfundidad(infoArchivo.getMatriz(), infoArchivo.getGoku());
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            for (int i = 0; i < path.size(); i++) {
-                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
-            }
-            etiPathEditable.setText(strPath);
+            pintarInfoAlgoritmo(path);
             movimientoGokuTiempo(path);
         }
-        
+
         if (optb == 2 && opab == 0) {
             long startTime = System.currentTimeMillis();
-            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz);
+            path = BusquedaAvara.busquedaAvara(infoArchivo.getMatriz(), infoArchivo.getGoku(), infoArchivo.getEsfera1(), infoArchivo.getEsfera2());
             //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            for (int i = 0; i < path.size(); i++) {
-                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
-            }
-            etiPathEditable.setText(strPath);
+            System.out.println("AVARA:");
+            pintarInfoAlgoritmo(path);
             movimientoGokuTiempo(path);
         }
         if (optb == 2 && opab == 1) {
             long startTime = System.currentTimeMillis();
-            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz);
+            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(infoArchivo.getMatriz(), infoArchivo.getGoku());
             //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            for (int i = 0; i < path.size(); i++) {
-                strPath += "[" + path.get(i).x + "," + path.get(i).y + "] ";
-            }
-            etiPathEditable.setText(strPath);
+            pintarInfoAlgoritmo(path);
             movimientoGokuTiempo(path);
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
@@ -441,6 +443,7 @@ public class Ventana extends javax.swing.JFrame {
                 tipoBusqueda.addItem("Búsqueda por profundidad");
                 break;
             case 2:
+                tipoBusqueda.setEnabled(true);
                 btnIniciar.setEnabled(true);
                 tipoBusqueda.removeAllItems();
                 tipoBusqueda.addItem("Búsqueda Avara");
@@ -476,9 +479,9 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel etiCosto;
     private javax.swing.JLabel etiCostoEditable;
     private javax.swing.JLabel etiNodoExpandidos;
+    private javax.swing.JLabel etiNodosExpandidosEditable;
     private javax.swing.JLabel etiPath;
     private javax.swing.JLabel etiPathEditable;
-    private javax.swing.JLabel etiPathEditable1;
     private javax.swing.JLabel etiProfundidadArb;
     private javax.swing.JLabel etiProfundidadArbEditable;
     private javax.swing.JLabel etiTiempoEjecucion;
@@ -488,6 +491,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelFondo;
     private javax.swing.JPanel panelInfo;
     private javax.swing.JComboBox<String> tipoBusqueda;
