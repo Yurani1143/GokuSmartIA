@@ -34,27 +34,7 @@ public class AlgoritmosDeBusquedaNoInformada {
                 nEsferas++;
                 cola.clear();
                 cola.add(nodoActual);
-                System.out.println("\n¡Goku encontró la Esfera del Dragón! en la casilla: (" + nodoActual.x + ", " + nodoActual.y + ")");
-                //JOptionPane.showMessageDialog(null, "\n¡Goku encontró la Esfera del Dragón! en la casilla: (" + nodoActual.x + ", " + nodoActual.y + ")");
-                System.out.println("Nodos expandidos: " + nodosExpandidos.size());
-                for (Nodo nodoExpandido : nodosExpandidos) {
-                    System.out.print("[" + nodoExpandido.x + "," + nodoExpandido.y + "]");
-                }
-
-                System.out.println("");
-                System.out.println("Profundidad del árbol: " + nodoActual.level + "\n");
-
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (visitado[i][j] == true) {
-                            System.out.print("0 ");
-                        } else {
-                            System.out.print("1 ");
-                        }
-                    }
-                    System.out.println();
-                }
-                System.out.println("");
+                
                 for (int i = 0; i < n; i++) {
                     for (int j = 0; j < m; j++) {
                         visitado[i][j] = false;
@@ -71,12 +51,6 @@ public class AlgoritmosDeBusquedaNoInformada {
                 }
 
                 Collections.reverse(path);
-                System.out.print("Camino: ");
-
-                for (int i = 0; i < path.size(); i++) {
-                    System.out.print("[" + path.get(i).x + "," + path.get(i).y + "]");
-                }
-                System.out.println("");
                 //cola.add(new Nodo(nodoActual.x, nodoActual.y, nodoActual.level));
                 if (nEsferas == 2) {
                     System.out.println("Goku ha encontrado las 2 esferas del Dragón");
@@ -139,26 +113,6 @@ public class AlgoritmosDeBusquedaNoInformada {
                 pila.clear();
                 pila.push(nodoActual);
 
-                System.out.println("Goku encontró la Esfera del Dragón en la posición (" + nodoActual.x + ", " + nodoActual.y + ")");
-
-                System.out.println("Nodos expandidos: " + nodosExpandidos.size());
-                for (Nodo nodosExpandido : nodosExpandidos) {
-                    System.out.print("[" + nodosExpandido.x + "," + nodosExpandido.y + "]");
-                }
-                System.out.println("");
-                System.out.println("Profundidad del árbol: " + nodoActual.level);
-
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (visitado[i][j] == true) {
-                            System.out.print("0 ");
-                        } else {
-                            System.out.print("1 ");
-                        }
-                    }
-                    System.out.println();
-                }
-                System.out.println("");
                 for (int i = 0; i < n; i++) {
                     for (int j = 0; j < m; j++) {
                         visitado[i][j] = false;
@@ -175,13 +129,7 @@ public class AlgoritmosDeBusquedaNoInformada {
                 }
 
                 Collections.reverse(path);
-                System.out.print("Camino: ");
-
-                for (int i = 0; i < path.size(); i++) {
-                    System.out.print("[" + path.get(i).x + "," + path.get(i).y + "]");
-                }
-                System.out.println("");
-                //cola.add(new Nodo(nodoActual.x, nodoActual.y, nodoActual.level));
+                
                 if (nEsferas == 2) {
                     System.out.println("Goku ha encontrado las 2 esferas del Dragón");
 

@@ -71,7 +71,7 @@ public class Ventana extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         panelFondo = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        etiFondo = new javax.swing.JLabel();
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -238,6 +238,7 @@ public class Ventana extends javax.swing.JFrame {
         btnIniciar.setForeground(new java.awt.Color(255, 255, 255));
         btnIniciar.setText("Iniciar búsqueda");
         btnIniciar.setEnabled(false);
+        btnIniciar.setFocusable(false);
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarActionPerformed(evt);
@@ -255,11 +256,11 @@ public class Ventana extends javax.swing.JFrame {
         panelFondo.setMinimumSize(new java.awt.Dimension(1150, 581));
         panelFondo.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo-namek.jpg"))); // NOI18N
-        jLabel4.setText("jLabel4");
-        jLabel4.setMaximumSize(new java.awt.Dimension(1321, 581));
-        jLabel4.setMinimumSize(new java.awt.Dimension(1321, 581));
-        jLabel4.setPreferredSize(new Dimension(panelFondo.getWidth(), panelFondo.getHeight()));
+        etiFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fondo-namek.jpg"))); // NOI18N
+        etiFondo.setText("jLabel4");
+        etiFondo.setMaximumSize(new java.awt.Dimension(1321, 581));
+        etiFondo.setMinimumSize(new java.awt.Dimension(1321, 581));
+        etiFondo.setPreferredSize(new Dimension(panelFondo.getWidth(), panelFondo.getHeight()));
 
         javax.swing.GroupLayout panelFondoLayout = new javax.swing.GroupLayout(panelFondo);
         panelFondo.setLayout(panelFondoLayout);
@@ -268,7 +269,7 @@ public class Ventana extends javax.swing.JFrame {
             .addGap(0, 1179, Short.MAX_VALUE)
             .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelFondoLayout.createSequentialGroup()
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 1179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(etiFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 1179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         panelFondoLayout.setVerticalGroup(
@@ -276,7 +277,7 @@ public class Ventana extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
             .addGroup(panelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(panelFondoLayout.createSequentialGroup()
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(etiFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -478,6 +479,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbxTipoBusqueda;
     private javax.swing.JLabel etiCosto;
     private javax.swing.JLabel etiCostoEditable;
+    private javax.swing.JLabel etiFondo;
     private javax.swing.JLabel etiNodoExpandidos;
     private javax.swing.JLabel etiNodosExpandidosEditable;
     private javax.swing.JLabel etiPath;
@@ -489,7 +491,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel panelFondo;

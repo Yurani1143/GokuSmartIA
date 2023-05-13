@@ -65,7 +65,7 @@ public class Archivo {
        int[][] matriz = new int [10][10];
        
        try{            
-           BufferedReader lector = new BufferedReader(new FileReader("matriz.txt"));            
+           BufferedReader lector = new BufferedReader(new FileReader("Prueba1.txt"));            
 
            String linea; 
            int i=0;

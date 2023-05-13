@@ -9,7 +9,6 @@ import java.util.Collections;
 public class BusquedaAvara {
 
     public static List<Nodo> busquedaAvara(int[][] matriz, Nodo goku, Nodo esfera1, Nodo esfera2) {
-        System.out.println("AVARAAAA");
         int n = matriz.length;
         int m = matriz[0].length;
         int[][] matrizInterna = new int[n][m];
@@ -38,26 +37,6 @@ public class BusquedaAvara {
                 cola.clear();
                 cola.add(nodoActual);
 
-                System.out.println("Goku encontró la Esfera del Dragón en la posición (" + nodoActual.x + ", " + nodoActual.y + ")");
-
-                System.out.println("Nodos expandidos: " + nodosExpandidos.size());
-                for (Nodo nodosExpandido : nodosExpandidos) {
-                    System.out.print("[" + nodosExpandido.x + "," + nodosExpandido.y + "]");
-                }
-                System.out.println("");
-                System.out.println("Profundidad del árbol: " + nodoActual.level);
-
-                for (int i = 0; i < n; i++) {
-                    for (int j = 0; j < m; j++) {
-                        if (visitado[i][j]) {
-                            System.out.print("0 ");
-                        } else {
-                            System.out.print("1 ");
-                        }
-                    }
-                    System.out.println();
-                }
-                System.out.println("");
                 for (int i = 0; i < n; i++) {
                     for (int j = 0; j < m; j++) {
                         visitado[i][j] = false;
@@ -73,13 +52,7 @@ public class BusquedaAvara {
                     nodoCamino = nodoCamino.parent;
                 }
                 Collections.reverse(path);
-                System.out.print("Camino: ");
-
-                for (int i = 0; i < path.size(); i++) {
-                    System.out.print("[" + path.get(i).x + "," + path.get(i).y + "]");
-                }
-                System.out.println("");
-
+                
                 if (nEsferas == 2) {
                     return path;
                 }

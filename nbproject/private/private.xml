@@ -4,9 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/Model/AlgoritmosDeBusquedaNoInformada.java</file>
+            <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/Model/Nodo2.java</file>
+            <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/Model/Archivo.java</file>
+            <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/Model/CostoUniforme.java</file>
             <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/GUI/Ventana.java</file>
-            <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/GUI/Tablero.java</file>
             <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/Model/BusquedaAvara.java</file>
+            <file>file:/C:/Users/Nicolas/Desktop/UNIVERSIDAD/IA/GokuSmartIA/src/Model/Nodo.java</file>
         </group>
     </open-files>
 </project-private>
