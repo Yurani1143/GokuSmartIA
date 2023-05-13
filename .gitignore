@@ -1,5 +1,9 @@
 # Compiled class file
-*.class
+**/*.class
+
+# IDE / Code editor project files
+nbproject/
+build.xml
 
 # Log file
 *.log
