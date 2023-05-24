@@ -22,6 +22,7 @@ public class CostoUniforme {
      */
     private int cantNodosExpandidos;
 
+
     /**
      * Profundidad del árbol de búsqueda
      */
@@ -46,23 +47,38 @@ public class CostoUniforme {
         this.llegoObjetivo = false;
     }
 
+    public Stack<Nodo2> getPath() {
+        return path;
+    }
+    
+    public int getCantNodosExpandidos() {
+        return cantNodosExpandidos;
+    }
+
+    public int getProfundidad() {
+        return profundidad;
+    }
+
     /**
      * Método que implementa el algoritmo de búsqueda por costo uniforme
      */
-    public void buscar(Nodo2 raiz) {
+    public void buscar(int[][] estadoInicial, int i, int j) {
 
+        Nodo2 raiz = new Nodo2(estadoInicial, i, j);
         cola.add(raiz);
 
-        while (!cola.isEmpty()) {
+        int k = 0;
+        while (k < 100000) {
 
             Nodo2 nodoActual = cola.poll();
 
-            if (esObjetivo(nodoActual)) {
+            esObjetivo(nodoActual);
+
+            if (llegoObjetivo) {
                 llenarCamino(nodoActual);
-                break;
+                return;
             }
             else {
-
                 Nodo2 hijoArr, hijoDer, hijoAba, hijoIzq;
 
                 hijoArr = nodoActual.aplicarOperador("ARRIBA");
@@ -87,10 +103,13 @@ public class CostoUniforme {
 
                 cantNodosExpandidos += 1;
 
-                if (hijoArr.getLevel() > profundidad) {
-                    profundidad = hijoArr.getLevel();
+                Nodo2[] hijos = {hijoArr, hijoDer, hijoAba, hijoIzq};
+
+                if (hijos.length !=0 && nodoActual.getLevel() + 1 > profundidad) {
+                    profundidad = nodoActual.getLevel() + 1;
                 }
             }
+            k += 1;
         }
     }
 
@@ -106,14 +125,10 @@ public class CostoUniforme {
         }
     }
 
-    private boolean esObjetivo(Nodo2 nodoActual) {
+    private void esObjetivo(Nodo2 nodoActual) {
         
         if (nodoActual.getEsferas() == 0) {
             llegoObjetivo = true;
-            return true;
-        }
-        else {
-            return false;
         }
     }   
 }

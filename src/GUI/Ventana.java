@@ -4,13 +4,18 @@
  */
 package GUI;
 
+import Model.AEstrella;
 import Model.AlgoritmosDeBusquedaNoInformada;
 import Model.Archivo;
 import Model.BusquedaAvara;
+import Model.CostoUniforme;
 import Model.Nodo;
+import Model.Nodo2;
+
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.TimerTask;
 import javax.swing.JLabel;
 import java.util.Timer;
@@ -351,6 +356,26 @@ public class Ventana extends javax.swing.JFrame {
         t.schedule(tarea, 0, 500);
     }
 
+    public void movimientoGokuTiempo(Stack<Nodo2> path) {
+        Timer t = new Timer();
+        TimerTask tarea = new TimerTask() {
+            int c = 0;
+
+            @Override
+            public void run() {
+                if (c != path.size()) {
+                    tb.movimientoGoku(infoArchivo.getMatriz(), path, c, PanelTablero, tablero);
+                } else {
+                    btnIniciar.setEnabled(true);
+                    t.cancel();
+                }
+                c++;
+            }
+        };
+
+        t.schedule(tarea, 0, 500);
+    }
+
     public void pintarInfoAlgoritmo(List<Nodo> path) {
         String strPath = "", strNodosExpandidos = "";
         for (int i = 0; i < path.size(); i++) {
@@ -364,10 +389,37 @@ public class Ventana extends javax.swing.JFrame {
         etiPathEditable.setText(path.size() + " - " + strPath);
     }
 
+    public void pintarInfoAlgoritmo(Stack<Nodo2> path, AEstrella instancia) {
+        String strPath = "", strNodosExpandidos = "";
+        for (int i = 0; i < path.size(); i++) {
+            strPath += "[" + path.get(i).getI() + "," + path.get(i).getJ() + "] ";
+        }
+        
+        strNodosExpandidos = Integer.toString(instancia.getCantNodosExpandidos());
+        
+        etiNodosExpandidosEditable.setText(strNodosExpandidos);
+        etiProfundidadArbEditable.setText(Integer.toString(instancia.getProfundidad()));
+        etiPathEditable.setText(path.size() + " - " + strPath);
+    }
+
+    public void pintarInfoAlgoritmo(Stack<Nodo2> path, CostoUniforme instancia) {
+        String strPath = "", strNodosExpandidos = "";
+        for (int i = 0; i < path.size(); i++) {
+            strPath += "[" + path.get(i).getI() + "," + path.get(i).getJ() + "] ";
+        }
+        
+        strNodosExpandidos = Integer.toString(instancia.getCantNodosExpandidos());
+        
+        etiNodosExpandidosEditable.setText(strNodosExpandidos);
+        etiProfundidadArbEditable.setText(Integer.toString(instancia.getProfundidad()));
+        etiPathEditable.setText(path.size() + " - " + strPath);
+    }
+
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
 
         btnIniciar.setEnabled(false);
         List<Nodo> path = new ArrayList<>();
+        Stack<Nodo2> path2 = new Stack<>();
         infoArchivo = Archivo.abrirArchivo();
         tb.dibujarTablero(infoArchivo.getMatriz(), PanelTablero, tablero);
 
@@ -383,13 +435,15 @@ public class Ventana extends javax.swing.JFrame {
             movimientoGokuTiempo(path);
         } else if (optb == 1 && opab == 1) {
             long startTime = System.currentTimeMillis();
-            path = BusquedaAvara.busquedaAvara(infoArchivo.getMatriz(), infoArchivo.getGoku(), infoArchivo.getEsfera1(), infoArchivo.getEsfera2());
+            CostoUniforme instancia = new CostoUniforme();
+            instancia.buscar(infoArchivo.getMatriz(), infoArchivo.getGoku().x, infoArchivo.getGoku().y);
+            path2 = instancia.getPath();
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            pintarInfoAlgoritmo(path);
-            movimientoGokuTiempo(path);
+            pintarInfoAlgoritmo(path2, instancia);
+            movimientoGokuTiempo(path2);
         } else if (optb == 1 && opab == 2) {
             long startTime = System.currentTimeMillis();
             path = AlgoritmosDeBusquedaNoInformada.busquedaPorProfundidad(infoArchivo.getMatriz(), infoArchivo.getGoku());
@@ -415,14 +469,18 @@ public class Ventana extends javax.swing.JFrame {
         }
         if (optb == 2 && opab == 1) {
             long startTime = System.currentTimeMillis();
-            path = AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(infoArchivo.getMatriz(), infoArchivo.getGoku());
-            //AlgoritmosDeBusquedaNoInformada.busquedaPorAmplitud(matriz,0,0);
+            AEstrella instancia = new AEstrella(
+                infoArchivo.getEsfera1().x, infoArchivo.getEsfera1().y,
+                infoArchivo.getEsfera2().x, infoArchivo.getEsfera2().y
+            );
+            instancia.buscar(infoArchivo.getMatriz(), infoArchivo.getGoku().x, infoArchivo.getGoku().y);
+            path2 = instancia.getPath();
             long endTime = System.currentTimeMillis();
             long totalTime = endTime - startTime;
             etiTiempoEjecucionEditable.setText(String.valueOf(totalTime) + " ms");
             System.out.println("El tiempo total de ejecución de la función fue: " + totalTime + " milisegundos.");
-            pintarInfoAlgoritmo(path);
-            movimientoGokuTiempo(path);
+            pintarInfoAlgoritmo(path2, instancia);
+            movimientoGokuTiempo(path2);
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 

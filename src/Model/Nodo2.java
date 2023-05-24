@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Nodo2 {
   
     /**
@@ -171,8 +173,13 @@ public class Nodo2 {
         int nuevoSemillasGoku = semillasGoku;
         int nuevoEsferas = esferas;
         int nuevoCosto = costo;
+
+        if (i - 1 == -1 || j + 1 == estadoMundo[0].length ||
+            i + 1 == estadoMundo.length || j - 1 == -1) {
+            return null;
+        }
         
-        switch (operadorAplicado) {
+        switch (operadorAplicar) {
             case "ARRIBA":
                 nuevoI = i - 1;
                 nuevoSemillasMundo = calcSemillasMundo(nuevoI, nuevoJ);
@@ -205,10 +212,27 @@ public class Nodo2 {
                 break;
         }
 
-        int[][] nuevoEstadoMundo = estadoMundo.clone();
-        nuevoEstadoMundo[i][j] = 0;
+        if (estadoMundo[nuevoI][nuevoJ] == 1) {
+            return null;
+        }
 
-        nuevoEstadoMundo[nuevoI][nuevoJ] = 1;
+        int[][] nuevoEstadoMundo = new int[estadoMundo.length][estadoMundo[0].length];
+        for (int i = 0; i < estadoMundo.length; i++) {
+            for (int j = 0; j < estadoMundo[0].length; j++) {
+                nuevoEstadoMundo[i][j] = estadoMundo[i][j];
+            }
+        }
+
+        nuevoEstadoMundo[nuevoI][nuevoJ] = 2;
+
+        int ocupantePrevioCasilla = (!Objects.isNull(padre)) ? padre.getEstadoMundo()[i][j] : 0;
+        
+        if(esEnemigo(ocupantePrevioCasilla) && semillasGoku == 0){
+            nuevoEstadoMundo[i][j] = ocupantePrevioCasilla;
+        }
+        else{
+            nuevoEstadoMundo[i][j] = 0;
+        }
 
         nuevoNodo = new Nodo2(
             nuevoEstadoMundo, nuevoI, nuevoJ, nuevoSemillasMundo, nuevoSemillasGoku,
@@ -243,7 +267,7 @@ public class Nodo2 {
      * @return semillas del mundo al moverse a i,j
      */
     private int calcSemillasMundo(int i, int j){
-
+                
         switch (estadoMundo[i][j]) {
             case 5:
                 return semillasMundo - 1;
@@ -294,12 +318,27 @@ public class Nodo2 {
         int cantidad = 0;
         for (int i = 0; i < estadoMundo.length; i++) {
             for (int j = 0; j < estadoMundo[0].length; j++) {
-                if (estadoMundo[i][j] == 2) {
+                if (estadoMundo[i][j] == 5) {
                     cantidad++;
                 }
             }
         }
 
         return cantidad;
+    }
+
+    /**
+     * @param ocupantePrevioCasilla
+     * @return true si el ocupante de la casilla es un enemigo, false en caso contrario
+     */
+    private boolean esEnemigo(int ocupantePrevioCasilla) {
+        
+        int[] enemigos = {3, 4};
+        for (int enemigo : enemigos) {
+            if (ocupantePrevioCasilla == enemigo) {
+                return true;
+            }
+        }
+        return false;
     }
 }

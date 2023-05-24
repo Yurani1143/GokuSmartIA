@@ -33,3 +33,15 @@ uno de los siguientes números:
 - 4 si es un cell
 - 5 si es una semilla del ermitaño
 - 6 si es una esfera del dragón
+
+## Ejecución del proyecto
+
+1. Para cargar un nuevo archivo txt se debe ingresar a la clase llamada "Archivo" de la carpeta "Model", buscar la función "abrirArchivo" y en la siguiente línea reemplazar el nombre
+BufferedReader lector = new BufferedReader(new FileReader("nombre.txt"))
+
+Ejemplo
+BufferedReader lector = new BufferedReader(new FileReader("Prueba1.txt")); 
+
+Nota: El archivo txt debe estar en la misma carpeta del proyecto.
+
+2. Ejecutar de nuevo el proyecto
