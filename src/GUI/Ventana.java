@@ -15,7 +15,6 @@ import Model.Nodo2;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 import java.util.TimerTask;
 import javax.swing.JLabel;
 import java.util.Timer;
@@ -356,7 +355,7 @@ public class Ventana extends javax.swing.JFrame {
         t.schedule(tarea, 0, 500);
     }
 
-    public void movimientoGokuTiempo(Stack<Nodo2> path) {
+    public void movimientoGokuTiempo(ArrayList<Nodo2> path) {
         Timer t = new Timer();
         TimerTask tarea = new TimerTask() {
             int c = 0;
@@ -389,7 +388,7 @@ public class Ventana extends javax.swing.JFrame {
         etiPathEditable.setText(path.size() + " - " + strPath);
     }
 
-    public void pintarInfoAlgoritmo(Stack<Nodo2> path, AEstrella instancia) {
+    public void pintarInfoAlgoritmo(ArrayList<Nodo2> path, AEstrella instancia) {
         String strPath = "", strNodosExpandidos = "";
         for (int i = 0; i < path.size(); i++) {
             strPath += "[" + path.get(i).getI() + "," + path.get(i).getJ() + "] ";
@@ -400,9 +399,10 @@ public class Ventana extends javax.swing.JFrame {
         etiNodosExpandidosEditable.setText(strNodosExpandidos);
         etiProfundidadArbEditable.setText(Integer.toString(instancia.getProfundidad()));
         etiPathEditable.setText(path.size() + " - " + strPath);
+        etiCostoEditable.setText(Integer.toString(instancia.getCostoTotal()));
     }
 
-    public void pintarInfoAlgoritmo(Stack<Nodo2> path, CostoUniforme instancia) {
+    public void pintarInfoAlgoritmo(ArrayList<Nodo2> path, CostoUniforme instancia) {
         String strPath = "", strNodosExpandidos = "";
         for (int i = 0; i < path.size(); i++) {
             strPath += "[" + path.get(i).getI() + "," + path.get(i).getJ() + "] ";
@@ -413,13 +413,14 @@ public class Ventana extends javax.swing.JFrame {
         etiNodosExpandidosEditable.setText(strNodosExpandidos);
         etiProfundidadArbEditable.setText(Integer.toString(instancia.getProfundidad()));
         etiPathEditable.setText(path.size() + " - " + strPath);
+        etiCostoEditable.setText(Integer.toString(instancia.getCostoTotal()));
     }
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
 
         btnIniciar.setEnabled(false);
         List<Nodo> path = new ArrayList<>();
-        Stack<Nodo2> path2 = new Stack<>();
+        ArrayList<Nodo2> path2 = new ArrayList<>();
         infoArchivo = Archivo.abrirArchivo();
         tb.dibujarTablero(infoArchivo.getMatriz(), PanelTablero, tablero);
 
@@ -505,7 +506,7 @@ public class Ventana extends javax.swing.JFrame {
                 btnIniciar.setEnabled(true);
                 tipoBusqueda.removeAllItems();
                 tipoBusqueda.addItem("Búsqueda Avara");
-                tipoBusqueda.addItem("Búsqueda Estrella");
+                tipoBusqueda.addItem("Búsqueda A*");
                 break;
             default:
                 btnIniciar.setEnabled(false);

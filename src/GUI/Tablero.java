@@ -7,9 +7,8 @@ package GUI;
 import Model.Nodo;
 import Model.Nodo2;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
-
 import javax.swing.*;
 
 public class Tablero extends JFrame {
@@ -42,7 +41,7 @@ public class Tablero extends JFrame {
         dibujarTablero(matriz, panel, tablero);
     }
 
-    public void movimientoGoku(int matriz[][], Stack<Nodo2> path, int c, JPanel panel, JLabel[][] tablero) {
+    public void movimientoGoku(int matriz[][], ArrayList<Nodo2> path, int c, JPanel panel, JLabel[][] tablero) {
         matriz[path.get(c).getI()][path.get(c).getJ()] = 2;
         if(c != 0){
          matriz[path.get(c-1).getI()][path.get(c-1).getJ()] = path.get(c).getEstadoMundo()[path.get(c-1).getI()][path.get(c-1).getJ()];  
@@ -63,10 +62,10 @@ public class Tablero extends JFrame {
                 imagen = new ImageIcon("src/img/goku.png");
                 break;
             case 3:
-                imagen = new ImageIcon("src/img/friezer.png");
+                imagen = new ImageIcon("src/img/cell.png");
                 break;
             case 4:
-                imagen = new ImageIcon("src/img/cell.png");
+                imagen = new ImageIcon("src/img/freezer.png");
                 break;
             case 5:
                 imagen = new ImageIcon("src/img/semillaErmitaño.png");

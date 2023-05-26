@@ -1,6 +1,10 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
@@ -21,7 +25,6 @@ public class CostoUniforme {
      * Cantidad de nodos expandidos
      */
     private int cantNodosExpandidos;
-
 
     /**
      * Profundidad del árbol de búsqueda
@@ -47,8 +50,13 @@ public class CostoUniforme {
         this.llegoObjetivo = false;
     }
 
-    public Stack<Nodo2> getPath() {
-        return path;
+    /**
+     * @return path as a list
+     */
+    public ArrayList<Nodo2> getPath() {
+        ArrayList<Nodo2> pathAsList = new ArrayList<Nodo2>(path);
+        Collections.reverse(pathAsList);
+        return pathAsList;
     }
     
     public int getCantNodosExpandidos() {
@@ -67,12 +75,12 @@ public class CostoUniforme {
         Nodo2 raiz = new Nodo2(estadoInicial, i, j);
         cola.add(raiz);
 
-        int k = 0;
-        while (k < 100000) {
-
+        while (!cola.isEmpty()) {
+            
             Nodo2 nodoActual = cola.poll();
 
             esObjetivo(nodoActual);
+            cantNodosExpandidos += 1;
 
             if (llegoObjetivo) {
                 llenarCamino(nodoActual);
@@ -101,15 +109,15 @@ public class CostoUniforme {
                     cola.add(hijoIzq);
                 }
 
-                cantNodosExpandidos += 1;
-
                 Nodo2[] hijos = {hijoArr, hijoDer, hijoAba, hijoIzq};
 
-                if (hijos.length !=0 && nodoActual.getLevel() + 1 > profundidad) {
+                if (
+                    Arrays.stream(hijos).anyMatch(Objects::nonNull)
+                    && nodoActual.getLevel() + 1 > profundidad
+                ) {
                     profundidad = nodoActual.getLevel() + 1;
                 }
             }
-            k += 1;
         }
     }
 
@@ -127,8 +135,15 @@ public class CostoUniforme {
 
     private void esObjetivo(Nodo2 nodoActual) {
         
-        if (nodoActual.getEsferas() == 0) {
+        if (nodoActual.getEsferasMundo() == 0) {
             llegoObjetivo = true;
         }
-    }   
+    }
+
+    /**
+     * @return costo total del camino solución
+     */
+    public int getCostoTotal() {
+        return path.firstElement().getCosto();
+    }
 }
