@@ -1,6 +1,10 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
@@ -56,22 +60,48 @@ public class AEstrella {
     }
 
     /**
+     * @return path as a list
+     */
+    public ArrayList<Nodo2> getPath() {
+        ArrayList<Nodo2> pathAsList = new ArrayList<Nodo2>(path);
+        Collections.reverse(pathAsList);
+        return pathAsList;
+    }
+
+    /**
+     * @return cantidad de nodos expandidos
+     */
+    public int getCantNodosExpandidos() {
+        return cantNodosExpandidos;
+    }
+
+    /**
+     * @return profundidad del árbol de búsqueda
+     */
+    public int getProfundidad() {
+        return profundidad;
+    }
+
+    /**
      * Método que implementa el algoritmo de búsqueda por costo uniforme
      */
-    public void buscar(Nodo2 raiz) {
+    public void buscar(int[][] estadoInicial, int i, int j) {
 
+        Nodo2 raiz = new Nodo2(estadoInicial, i, j);
         cola.add(raiz);
 
         while (!cola.isEmpty()) {
 
             Nodo2 nodoActual = cola.poll();
 
-            if (esObjetivo(nodoActual)) {
+            esObjetivo(nodoActual);
+            cantNodosExpandidos += 1;
+
+            if (llegoObjetivo) {
                 llenarCamino(nodoActual);
-                break;
+                return;
             }
             else {
-
                 Nodo2 hijoArr, hijoDer, hijoAba, hijoIzq;
 
                 hijoArr = nodoActual.aplicarOperador("ARRIBA");
@@ -94,10 +124,13 @@ public class AEstrella {
                     cola.add(hijoIzq);
                 }
 
-                cantNodosExpandidos += 1;
+                Nodo2[] hijos = {hijoArr, hijoDer, hijoAba, hijoIzq};
 
-                if (hijoArr.getLevel() > profundidad) {
-                    profundidad = hijoArr.getLevel();
+                if (
+                    Arrays.stream(hijos).anyMatch(Objects::nonNull)
+                    && nodoActual.getLevel() + 1 > profundidad
+                ) {
+                    profundidad = nodoActual.getLevel() + 1;
                 }
             }
         }
@@ -119,14 +152,10 @@ public class AEstrella {
      * @param nodoActual
      * @return true si el nodo actual es el objetivo, false en caso contrario
      */
-    private boolean esObjetivo(Nodo2 nodoActual) {
+    private void esObjetivo(Nodo2 nodoActual) {
         
-        if (nodoActual.getEsferas() == 0) {
+        if (nodoActual.getEsferasMundo() == 0) {
             llegoObjetivo = true;
-            return true;
-        }
-        else {
-            return false;
         }
     }
 
@@ -138,6 +167,11 @@ public class AEstrella {
         return distanciaEuclidiana(nodo);
     }
 
+    /**
+     * @param nodo
+     * @return distancia euclidiana desde el nodo hasta
+     * la bola del dragón más cercana
+     */
     private double distanciaEuclidiana(Nodo2 nodo) {
         double d1 = Math.sqrt(Math.pow((nodo.getI() - esferaX), 2.0) + Math.pow((nodo.getJ() - esferaY), 2.0));
         double d2 = Math.sqrt(Math.pow((nodo.getI() - esferaX2), 2.0) + Math.pow((nodo.getJ() - esferaY2), 2.0));
@@ -146,5 +180,12 @@ public class AEstrella {
         } else {
             return d2;
         }
+    }
+
+    /**
+     * @return costo total del camino solución
+     */
+    public int getCostoTotal() {
+        return path.firstElement().getCosto();
     }
 }

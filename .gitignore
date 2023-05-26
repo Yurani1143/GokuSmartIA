@@ -4,6 +4,7 @@
 # IDE / Code editor project files
 nbproject/
 build.xml
+.vscode/
 
 # Log file
 *.log

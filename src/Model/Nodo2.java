@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Objects;
+
 public class Nodo2 {
   
     /**
@@ -18,19 +20,14 @@ public class Nodo2 {
     private int j;
 
     /**
-     * Número de semillas en el estado del mundo en este nodo
-     */
-    private int semillasMundo;
-
-    /**
      * Número de semillas que Goku lleva en este nodo
      */
     private int semillasGoku;
 
-    /**
+	/**
      * Número de esferas en el estado del mundo en este nodo
      */
-    private int esferas;
+    private int esferasMundo;
 
     /**
      * Nodo padre de este nodo
@@ -64,9 +61,8 @@ public class Nodo2 {
         this.estadoMundo = estadoMundo;
         this.i = i;
         this.j = j;
-        this.semillasMundo = contarSemillasMundo();
         this.semillasGoku = 0;
-        this.esferas = 2;
+        this.esferasMundo = 2;
         this.padre = null;
         this.operadorAplicado = null;
         this.level = 0;
@@ -86,15 +82,14 @@ public class Nodo2 {
      * @param costo
      */
     public Nodo2(
-        int[][] estadoMundo, int i, int j, int semillasMundo, int semillasGoku, int esferas,
+        int[][] estadoMundo, int i, int j, int semillasGoku, int esferas,
         Nodo2 padre, String operadorAplicado, int level, int costo) {
         
         this.estadoMundo = estadoMundo;
         this.i = i;
         this.j = j;
-        this.semillasMundo = semillasMundo;
         this.semillasGoku = semillasGoku;
-        this.esferas = esferas;
+        this.esferasMundo = esferas;
         this.padre = padre;
         this.operadorAplicado = operadorAplicado;
         this.level = level;
@@ -123,10 +118,17 @@ public class Nodo2 {
     }
 
     /**
+     * @return cantidad de semillas que Goku lleva en este nodo
+     */
+    public int getSemillasGoku() {
+		return semillasGoku;
+	}
+
+    /**
      * @return cantidad de esferas del mundo en este nodo
      */
-    public int getEsferas() {
-        return esferas;
+    public int getEsferasMundo() {
+        return esferasMundo;
     }
 
     /**
@@ -159,6 +161,7 @@ public class Nodo2 {
 
     /**
      * Aplica un operador al estado del mundo en este nodo, generando un nuevo Nodo
+     * o null si el operador no es aplicable
      * @param operadorAplicar
      * @return nuevoNodo
      */
@@ -167,55 +170,98 @@ public class Nodo2 {
         Nodo2 nuevoNodo = null;
         int nuevoI = i;
         int nuevoJ = j;
-        int nuevoSemillasMundo = semillasMundo;
         int nuevoSemillasGoku = semillasGoku;
-        int nuevoEsferas = esferas;
+        int nuevoEsferasMundo = esferasMundo;
         int nuevoCosto = costo;
         
-        switch (operadorAplicado) {
+        switch (operadorAplicar) {
             case "ARRIBA":
                 nuevoI = i - 1;
-                nuevoSemillasMundo = calcSemillasMundo(nuevoI, nuevoJ);
+                if (fueraDeRango(nuevoI, nuevoJ)) return null;
                 nuevoSemillasGoku = calcSemillasGoku(nuevoI, nuevoJ);
-                nuevoEsferas = calcEsferas(nuevoI, nuevoJ);
+                nuevoEsferasMundo = calcEsferasMundo(nuevoI, nuevoJ);
                 nuevoCosto = calcCosto(nuevoI, nuevoJ);
                 break;
             case "ABAJO":
                 nuevoI = i + 1;
-                nuevoSemillasMundo = calcSemillasMundo(nuevoI, nuevoJ);
+                if (fueraDeRango(nuevoI, nuevoJ)) return null;
                 nuevoSemillasGoku = calcSemillasGoku(nuevoI, nuevoJ);
-                nuevoEsferas = calcEsferas(nuevoI, nuevoJ);
+                nuevoEsferasMundo = calcEsferasMundo(nuevoI, nuevoJ);
                 nuevoCosto = calcCosto(nuevoI, nuevoJ);
                 break;
             case "IZQUIERDA":
                 nuevoJ = j - 1;
-                nuevoSemillasMundo = calcSemillasMundo(nuevoI, nuevoJ);
+                if (fueraDeRango(nuevoI, nuevoJ)) return null;
                 nuevoSemillasGoku = calcSemillasGoku(nuevoI, nuevoJ);
-                nuevoEsferas = calcEsferas(nuevoI, nuevoJ);
+                nuevoEsferasMundo = calcEsferasMundo(nuevoI, nuevoJ);
                 nuevoCosto = calcCosto(nuevoI, nuevoJ);
                 break;
             case "DERECHA":
                 nuevoJ = j + 1;
-                nuevoSemillasMundo = calcSemillasMundo(nuevoI, nuevoJ);
+                if (fueraDeRango(nuevoI, nuevoJ)) return null;
                 nuevoSemillasGoku = calcSemillasGoku(nuevoI, nuevoJ);
-                nuevoEsferas = calcEsferas(nuevoI, nuevoJ);
+                nuevoEsferasMundo = calcEsferasMundo(nuevoI, nuevoJ);
                 nuevoCosto = calcCosto(nuevoI, nuevoJ);
                 break;
             default:
                 break;
         }
 
-        int[][] nuevoEstadoMundo = estadoMundo.clone();
-        nuevoEstadoMundo[i][j] = 0;
+        if (
+            estadoMundo[nuevoI][nuevoJ] == 1 ||
+            seDevuelve(operadorAplicar) &&
+            !(estadoMundo[nuevoI][nuevoJ] == 5 ||
+            estadoMundo[nuevoI][nuevoJ] == 6)
+        ){
+            return null;
+        }
 
-        nuevoEstadoMundo[nuevoI][nuevoJ] = 1;
+        int[][] nuevoEstadoMundo = new int[estadoMundo.length][estadoMundo[0].length];
+        for (int i = 0; i < estadoMundo.length; i++) {
+            for (int j = 0; j < estadoMundo[0].length; j++) {
+                nuevoEstadoMundo[i][j] = estadoMundo[i][j];
+            }
+        }
+
+        nuevoEstadoMundo[nuevoI][nuevoJ] = 2;
+
+        int ocupantePrevioCasilla = (!Objects.isNull(padre)) ? padre.getEstadoMundo()[i][j] : 0;
+        
+        if(esEnemigo(ocupantePrevioCasilla) && padre.getSemillasGoku() == 0){
+            nuevoEstadoMundo[i][j] = ocupantePrevioCasilla;
+        }
+        else{
+            nuevoEstadoMundo[i][j] = 0;
+        }
 
         nuevoNodo = new Nodo2(
-            nuevoEstadoMundo, nuevoI, nuevoJ, nuevoSemillasMundo, nuevoSemillasGoku,
-            nuevoEsferas, this, operadorAplicar, level + 1, nuevoCosto
+            nuevoEstadoMundo, nuevoI, nuevoJ, nuevoSemillasGoku,
+            nuevoEsferasMundo, this, operadorAplicar, level + 1, nuevoCosto
         );
 
         return nuevoNodo;
+    }
+
+    /**
+     * @param operadorAplicar
+     * @return true si el operador a aplicar es el opuesto al operador que se aplicó
+     * para llegar a este nodo
+     */
+    private boolean seDevuelve(String operadorAplicar) {
+        
+        if(Objects.isNull(padre)) return false;
+        switch (operadorAplicado) {
+            case "ARRIBA":
+                return operadorAplicar.equals("ABAJO");
+            case "ABAJO":
+                return operadorAplicar.equals("ARRIBA");
+            case "IZQUIERDA":
+                return operadorAplicar.equals("DERECHA");
+            case "DERECHA":
+                return operadorAplicar.equals("IZQUIERDA");
+            default:
+                return false;
+        }
     }
 
     /**
@@ -240,30 +286,15 @@ public class Nodo2 {
     /**
      * @param i
      * @param j
-     * @return semillas del mundo al moverse a i,j
-     */
-    private int calcSemillasMundo(int i, int j){
-
-        switch (estadoMundo[i][j]) {
-            case 5:
-                return semillasMundo - 1;
-            default:
-                return semillasMundo;
-        }
-    }
-
-    /**
-     * @param i
-     * @param j
      * @return semillas de Goku al moverse a i,j
      */
     private int calcSemillasGoku(int i, int j){
 
         switch (estadoMundo[i][j]) {
             case 3:
-                return semillasGoku - 1;
+                return semillasGoku > 0 ? semillasGoku - 1 : semillasGoku;
             case 4:
-                return semillasGoku - 1;
+                return semillasGoku > 0 ? semillasGoku - 1 : semillasGoku;
             case 5:
                 return semillasGoku + 1;
             default:
@@ -274,32 +305,39 @@ public class Nodo2 {
     /**
      * @param i
      * @param j
-     * @return esferas al moverse a i,j
+     * @return esferas en el mundo al moverse a i,j
      */
-    private int calcEsferas(int i, int j){
+    private int calcEsferasMundo(int i, int j){
 
         switch (estadoMundo[i][j]) {
             case 6:
-                return esferas - 1;
+                return esferasMundo - 1;
             default:
-                return esferas;
+                return esferasMundo;
         }
     }
 
     /**
-     * @return cantidad de semillas en el mundo en este nodo (usado en nodo inicial)
+     * @param ocupantePrevioCasilla
+     * @return true si el ocupante de la casilla es un enemigo, false en caso contrario
      */
-    private int contarSemillasMundo() {
+    private boolean esEnemigo(int ocupantePrevioCasilla) {
         
-        int cantidad = 0;
-        for (int i = 0; i < estadoMundo.length; i++) {
-            for (int j = 0; j < estadoMundo[0].length; j++) {
-                if (estadoMundo[i][j] == 2) {
-                    cantidad++;
-                }
+        int[] enemigos = {3, 4};
+        for (int enemigo : enemigos) {
+            if (ocupantePrevioCasilla == enemigo) {
+                return true;
             }
         }
+        return false;
+    }
 
-        return cantidad;
+    /**
+     * @param i
+     * @param j
+     * @return true si la posición i,j está fuera del rango del mundo
+     */
+    private boolean fueraDeRango(int i, int j) {
+        return i < 0 || i >= estadoMundo.length || j < 0 || j >= estadoMundo[0].length;
     }
 }

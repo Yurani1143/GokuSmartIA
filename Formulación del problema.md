@@ -23,7 +23,7 @@ Los operadores son las acciones que puede realizar Goku, que son:
   - Moverse a la derecha
 
 - ### Prueba de meta
-La prueba de meta es una función que verifica si el estado actual es un estado meta, es decir, si Goku ha tomado dos esferas del dragón (no hay 6 en el estado actual).
+La prueba de meta es una función que verifica si el estado actual es un estado meta, es decir, si Goku ha tomado todas (dos) las esferas del dragón.
 
 - ### Costo de ruta
 El costo es la suma de los costos de cada una de las acciones individuales a lo largo de una ruta.
@@ -36,5 +36,4 @@ En cada caso, el costo de una acción es:
   - 1 si es un cell con semilla
 
 - ### Heurística
-
 La herística consiste en tomar la distancia euclideana entre Goku y la esfera del dragón más cercana.

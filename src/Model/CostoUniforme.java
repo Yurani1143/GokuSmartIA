@@ -1,6 +1,10 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
@@ -47,22 +51,42 @@ public class CostoUniforme {
     }
 
     /**
+     * @return path as a list
+     */
+    public ArrayList<Nodo2> getPath() {
+        ArrayList<Nodo2> pathAsList = new ArrayList<Nodo2>(path);
+        Collections.reverse(pathAsList);
+        return pathAsList;
+    }
+    
+    public int getCantNodosExpandidos() {
+        return cantNodosExpandidos;
+    }
+
+    public int getProfundidad() {
+        return profundidad;
+    }
+
+    /**
      * Método que implementa el algoritmo de búsqueda por costo uniforme
      */
-    public void buscar(Nodo2 raiz) {
+    public void buscar(int[][] estadoInicial, int i, int j) {
 
+        Nodo2 raiz = new Nodo2(estadoInicial, i, j);
         cola.add(raiz);
 
         while (!cola.isEmpty()) {
-
+            
             Nodo2 nodoActual = cola.poll();
 
-            if (esObjetivo(nodoActual)) {
+            esObjetivo(nodoActual);
+            cantNodosExpandidos += 1;
+
+            if (llegoObjetivo) {
                 llenarCamino(nodoActual);
-                break;
+                return;
             }
             else {
-
                 Nodo2 hijoArr, hijoDer, hijoAba, hijoIzq;
 
                 hijoArr = nodoActual.aplicarOperador("ARRIBA");
@@ -85,10 +109,13 @@ public class CostoUniforme {
                     cola.add(hijoIzq);
                 }
 
-                cantNodosExpandidos += 1;
+                Nodo2[] hijos = {hijoArr, hijoDer, hijoAba, hijoIzq};
 
-                if (hijoArr.getLevel() > profundidad) {
-                    profundidad = hijoArr.getLevel();
+                if (
+                    Arrays.stream(hijos).anyMatch(Objects::nonNull)
+                    && nodoActual.getLevel() + 1 > profundidad
+                ) {
+                    profundidad = nodoActual.getLevel() + 1;
                 }
             }
         }
@@ -106,14 +133,17 @@ public class CostoUniforme {
         }
     }
 
-    private boolean esObjetivo(Nodo2 nodoActual) {
+    private void esObjetivo(Nodo2 nodoActual) {
         
-        if (nodoActual.getEsferas() == 0) {
+        if (nodoActual.getEsferasMundo() == 0) {
             llegoObjetivo = true;
-            return true;
         }
-        else {
-            return false;
-        }
-    }   
+    }
+
+    /**
+     * @return costo total del camino solución
+     */
+    public int getCostoTotal() {
+        return path.firstElement().getCosto();
+    }
 }
